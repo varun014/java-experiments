@@ -1,0 +1,97 @@
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Scanner;
+
+class Card {
+    private String symbol;
+    private int value;
+
+    public Card(String symbol, int value) {
+        this.symbol = symbol;
+        this.value = value;
+    }
+
+    public String getSymbol() {
+        return symbol;
+    }
+
+    public int getValue() {
+        return value;
+    }
+
+    @Override
+    public String toString() {
+        return "Card{Symbol='" + symbol + "', Value=" + value + "}";
+    }
+}
+
+public class CardCollection {
+    private static Collection<Card> cardCollection = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
+
+    public static void addCard() {
+        System.out.print("Enter card symbol: ");
+        String symbol = scanner.next();
+        System.out.print("Enter card value: ");
+        int value = scanner.nextInt();
+
+        cardCollection.add(new Card(symbol, value));
+        System.out.println("Card added successfully!\n");
+    }
+
+    public static void findCardsBySymbol() {
+        System.out.print("Enter symbol to search for: ");
+        String searchSymbol = scanner.next();
+        boolean found = false;
+
+        System.out.println("Cards with symbol '" + searchSymbol + "':");
+        for (Card card : cardCollection) {
+            if (card.getSymbol().equalsIgnoreCase(searchSymbol)) {
+                System.out.println(card);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No cards found with this symbol.\n");
+        } else {
+            System.out.println();
+        }
+    }
+
+    public static void displayAllCards() {
+        if (cardCollection.isEmpty()) {
+            System.out.println("No cards in the collection.\n");
+        } else {
+            System.out.println("All Stored Cards:");
+            for (Card card : cardCollection) {
+                System.out.println(card);
+            }
+            System.out.println();
+        }
+    }
+
+    public static void main(String[] args) {
+        while (true) {
+            System.out.println("Card Collection System");
+            System.out.println("1. Add Card");
+            System.out.println("2. Find Cards by Symbol");
+            System.out.println("3. Display All Cards");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            
+            int choice = scanner.nextInt();
+            switch (choice) {
+                case 1 -> addCard();
+                case 2 -> findCardsBySymbol();
+                case 3 -> displayAllCards();
+                case 4 -> {
+                    System.out.println("Exiting program...");
+                    scanner.close();
+                    return;
+                }
+                default -> System.out.println("Invalid choice! Please try again.\n");
+            }
+        }
+    }
+}
